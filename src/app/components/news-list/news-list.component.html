@@ -1,0 +1,32 @@
+<div class="container-fluid">
+  <div class="row col d-flex justify-content-end align-items-start">
+    <div class="col-4">
+        <p *ngIf="loader" class="spinner-border text-success justify-content-end"></p>
+    </div>
+    <div class="col-4"><input type="text" [(ngModel)]="searchtext" (input)="filterNews()" placeholder="Search News" width="95%"></div>
+    <div class="col-1 justify-content-end">
+      <select class="form-select" id="status" name="status" [(ngModel)]="pageSize" (change)='setPageSize($event)'>
+        <option selected value="10">10</option>
+        <option value="20">20</option>
+        <option value="30">30</option>
+        <option value="50">50</option>
+      </select>
+    </div>
+    <div class="pagination col-2 justify-content-end">
+      <button (click)="getPageData(currentPage-1)" [disabled]="currentPage === 1" class="btn btn-info">
+        {{"<<"}} </button>
+          <span class="middle" >P : {{ currentPage }}</span>
+          <button (click)="getPageData(currentPage+1)" [disabled]="currentPage * pageSize >= newsArticles.length"
+            class="btn btn-info">>></button>
+    </div>
+  </div>
+  <br>
+  <div class="row row-cols-1 row-cols-md-1 g-2">
+    <div class="col card border-primary" *ngFor="let news of newsArticles| slice:start:end;let i=index ">
+      <div class="card-body text-primary">
+        <h5 class="card-title">{{start+i+1}}) {{news.title}}</h5>
+        <p class="card-text" *ngIf="news.url"><a href="{{news.url}}"  target="_blank"> Read More</a> </p>
+      </div>
+    </div>
+  </div>
+</div>
