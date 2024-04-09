@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { AfterViewInit, Component, OnInit } from '@angular/core';
 import { NewsserviceService } from '../../services/newsservice.service';
 import { NewsArticle } from '../../models/news-article.model';
 
@@ -20,12 +20,13 @@ export class NewsListComponent implements OnInit  {
   fetchNewCount:number=200;//Fix news count which can update dynamically if requried
   constructor(private newsservice: NewsserviceService) {
   }
-  
+    
   ngOnInit(): void {
+    this.showloader();
     this.getNewsList();
   }
   getNewsList() {
-    this.showloader();
+    
     this.newsservice.getNewList(this.fetchNewCount)
       .subscribe({
         next: (News) => {
